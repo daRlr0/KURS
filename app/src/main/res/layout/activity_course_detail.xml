@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout для экрана деталей курса.
+    
+    Структура:
+    - CoordinatorLayout (координирует поведение компонентов)
+      - AppBarLayout с CollapsingToolbarLayout (сворачивающийся header с изображением)
+      - NestedScrollView (прокручиваемый контент)
+        - CardView с информацией о курсе
+        - CardView с полем для комментария и оценки
+      - FloatingActionButton (добавление в избранное)
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.CourseDetailActivity">
+
+    <!--
+        AppBarLayout с Header Image - Большое изображение курса в шапке
+        
+        Material Design 3 Hero Header:
+        - Высота 320dp для полного погружения
+        - CollapsingToolbarLayout сворачивается при прокрутке (параллакс эффект)
+        - Градиент поверх изображения для читабельности Toolbar
+        - contentScrim = primary color при полном сворачивании
+    -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:elevation="0dp">
+
+        <!--
+            CollapsingToolbarLayout - Сворачивающийся header
+            
+            Scroll flags:
+            - scroll: header сворачивается при прокрутке вниз
+            - exitUntilCollapsed: сворачивается до размера Toolbar
+            
+            contentScrim: Цвет header при полном сворачивании (primary)
+            statusBarScrim: Цвет статус бара (transparent для плавного перехода)
+        -->
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:statusBarScrim="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <!--
+                Header Image - Большое качественное изображение
+                
+                Размер: Весь header (320dp) для максимального visual impact
+                scaleType="centerCrop" - заполняет всю область без искажений
+                layout_collapseMode="parallax" - параллакс эффект при сворачивании:
+                    Изображение скроллится медленнее чем контент (эффект глубины)
+                
+                Glide загрузит реальное фото из Unsplash в высоком качестве:
+                - w=1200 в URL для Full HD экранов
+                - q=85 для баланса качества и размера файла
+                - Кеширование для мгновенной повторной загрузки
+            -->
+            <ImageView
+                android:id="@+id/courseImageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/course_image"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5"
+                tools:src="@drawable/ic_course_placeholder" />
+
+            <!--
+                Градиент Scrim - Затемнение для читабельности Toolbar
+                
+                Градиент снизу вверх (прозрачный → темный) обеспечивает:
+                - Читабельность белых иконок Toolbar на любом изображении
+                - Плавный переход между изображением и Toolbar
+                - Профессиональный вид (как в Google Photos, YouTube)
+            -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@drawable/gradient_scrim_top"
+                app:layout_collapseMode="pin" />
+
+            <!--
+                Toolbar - Верхняя панель с кнопкой "Назад"
+                
+                Цвета:
+                - navigationIcon (стрелка назад) = белый для контраста
+                - popupTheme = Light для overflow menu (если будет)
+                
+                layout_collapseMode="pin" - остается на месте при сворачивании
+            -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIconTint="@android:color/white"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Основной контент -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!--
+                Карточка с информацией о курсе - Material Design 3
+                
+                Параметры для читабельности и современного вида:
+                - cardCornerRadius="16dp" - скругление увеличено для MD3
+                - cardElevation="2dp" - мягкая тень (меньше = современнее)
+                - strokeWidth="0dp" - без обводки для чистого вида
+                - margin 16dp - просторные отступы от краев экрана
+            -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp"
+                android:layout_marginBottom="16dp">
+
+                <!--
+                    LinearLayout для вертикального расположения элементов
+                    
+                    Padding 20dp вместо 16dp для большего "воздуха"
+                    и лучшей читабельности текста (особенно описания)
+                -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!--
+                        Название курса - HeadlineSmall
+                        
+                        Typography: 24sp, medium weight для заголовков
+                        marginBottom 12dp для отделения от метаданных
+                    -->
+                    <TextView
+                        android:id="@+id/courseTitleTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:textAppearance="@style/TextAppearance.App.HeadlineSmall"
+                        tools:text="Android Development для начинающих" />
+
+                    <!--
+                        Провайдер - Caption style
+                        
+                        Серый цвет для вторичной информации
+                        Отступ 6dp между метаданными
+                    -->
+                    <TextView
+                        android:id="@+id/providerTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:textAppearance="@style/TextAppearance.App.Caption"
+                        tools:text="Провайдер: Udemy" />
+
+                    <!--
+                        Длительность - Caption style
+                        Отступ 6dp для группировки метаданных
+                    -->
+                    <TextView
+                        android:id="@+id/durationTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:textAppearance="@style/TextAppearance.App.Caption"
+                        tools:text="Длительность: 40 часов" />
+
+                    <!--
+                        Уровень сложности - Caption style с цветом
+                        Цвет будет установлен программно в Activity
+                    -->
+                    <TextView
+                        android:id="@+id/levelTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.App.Caption"
+                        tools:text="Уровень: Начальный" />
+
+                    <!--
+                        Разделитель - Тонкая линия для разделения секций
+                        
+                        Цвет: outlineVariant - светлый серый из MD3 палитры
+                        Отступы: 20dp сверху и снизу для "воздуха"
+                    -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="?attr/colorOutlineVariant" />
+
+                    <!--
+                        Заголовок секции "Описание" - TitleMedium
+                        
+                        Typography: 16sp, medium weight
+                        marginBottom 12dp перед текстом описания
+                    -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="Описание"
+                        android:textAppearance="@style/TextAppearance.App.TitleMedium" />
+
+                    <!--
+                        Описание курса - BodyLarge для читабельности
+                        
+                        Typography: 16sp с lineSpacingExtra 4sp
+                        Увеличенный межстрочный интервал критичен для длинных текстов!
+                        
+                        Принципы читабельности:
+                        - Размер 16sp (не меньше 14sp для основного текста)
+                        - lineSpacingExtra 4sp (междустрочный интервал)
+                        - Контрастный цвет (onSurface = почти черный)
+                        - Максимальная ширина ~600dp для комфортного чтения
+                          (автоматически благодаря padding карточки)
+                    -->
+                    <TextView
+                        android:id="@+id/descriptionTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.App.BodyLarge"
+                        tools:text="Изучите основы разработки Android приложений. Курс охватывает все необходимые темы для начинающих разработчиков. Вы научитесь создавать красивые интерфейсы и писать качественный код." />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--
+                Карточка с отзывом пользователя - Вторая секция
+                
+                Те же параметры что и первая карточка для консистентности:
+                - 16dp скругление
+                - 2dp elevation
+                - Без обводки
+            -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!--
+                        Заголовок секции "Ваш отзыв" - TitleMedium
+                        marginBottom 16dp для отступа от RatingBar
+                    -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Ваш отзыв"
+                        android:textAppearance="@style/TextAppearance.App.TitleMedium" />
+
+                    <!--
+                        RatingBar - Оценка курса (0-5 звезд)
+                        
+                        Параметры:
+                        - numStars="5" - максимум 5 звезд
+                        - stepSize="0.5" - половинки звезд (0.5, 1.0, 1.5 и т.д.)
+                        - rating="0" - изначально без оценки
+                        
+                        Цвет звезд берется из темы (colorPrimary)
+                        marginBottom 20dp перед полем комментария
+                    -->
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:numStars="5"
+                        android:stepSize="0.5"
+                        android:rating="0"
+                        android:progressTint="?attr/colorPrimary"
+                        android:secondaryProgressTint="?attr/colorPrimaryContainer" />
+
+                    <!--
+                        TextInputLayout - Material Design 3 поле ввода
+                        
+                        Style: OutlinedBox - обводка вокруг поля (современный стиль)
+                        hint - плавающая подсказка "Комментарий"
+                        
+                        Преимущества OutlinedBox:
+                        - Четкие границы поля
+                        - Hint анимированно поднимается вверх при фокусе
+                        - Цвета outline берутся из темы
+                    -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Комментарий"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp">
+
+                        <!--
+                            TextInputEditText - Многострочное поле ввода
+                            
+                            Параметры для комфортного ввода текста:
+                            - minHeight="140dp" - достаточно для 3-4 строк
+                            - gravity="top|start" - текст начинается сверху слева
+                            - inputType="textMultiLine" - многострочный ввод
+                            - maxLines="6" - максимум 6 строк, потом скролл
+                            
+                            lineSpacingExtra для читабельности
+                        -->
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/commentEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="140dp"
+                            android:gravity="top|start"
+                            android:inputType="textMultiLine"
+                            android:textAppearance="@style/TextAppearance.App.BodyMedium"
+                            android:maxLines="6" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!--
+                        MaterialButton - Кнопка "Сохранить отзыв"
+                        
+                        Material Design 3 Filled Button:
+                        - Filled style (фон = colorPrimary)
+                        - 24dp высота (стандарт MD3)
+                        - Скругление 12dp (из темы)
+                        - Ripple эффект при нажатии
+                        
+                        marginTop 20dp для отступа от поля ввода
+                    -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/saveReviewButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="14dp"
+                        android:text="Сохранить отзыв"
+                        android:textAppearance="@style/TextAppearance.App.LabelLarge"
+                        app:cornerRadius="12dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- FloatingActionButton для добавления в избранное -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/add_to_favorites"
+        app:srcCompat="@drawable/ic_favorite_border" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

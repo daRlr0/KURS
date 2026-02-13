@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout для экрана избранных курсов.
+    
+    Структура аналогична главному экрану, но без фильтров и поиска.
+    
+    Компоненты:
+    - CoordinatorLayout
+      - AppBarLayout с Toolbar
+      - RecyclerView с избранными курсами
+      - Empty State (если нет избранных)
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.FavoritesActivity">
+
+    <!-- AppBarLayout с Toolbar -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Основной контент -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- RecyclerView с избранными курсами -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/favoritesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:padding="8dp"
+                tools:listitem="@layout/item_course" />
+
+            <!--
+                Empty State для пустого списка избранного
+                
+                Показывается когда Resource.SUCCESS но список пустой
+                (пользователь ещё не добавил ни одного курса в избранное)
+                
+                Стиль аналогичен Empty State на главном экране
+                для консистентности UX
+            -->
+            <LinearLayout
+                android:id="@+id/emptyStateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="40dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <!--
+                    Иконка Empty State - Сердечко
+                    
+                    Большое пустое сердце визуально объясняет
+                    что здесь должны быть избранные курсы
+                -->
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/ic_favorite_border"
+                    android:contentDescription="@string/empty_favorites_icon"
+                    app:tint="?attr/colorSecondary" />
+
+                <!-- Заголовок Empty State -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Нет избранных курсов"
+                    android:textAppearance="@style/TextAppearance.App.EmptyStateTitle" />
+
+                <!--
+                    Подсказка - Как добавить курсы в избранное
+                    
+                    Помогает пользователю понять как пользоваться функцией
+                -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="Добавьте курсы в избранное,\nчтобы быстро находить их здесь"
+                    android:textAppearance="@style/TextAppearance.App.EmptyStateBody" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

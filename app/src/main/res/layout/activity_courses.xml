@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout для главного экрана приложения - список курсов.
+    
+    Структура:
+    - CoordinatorLayout (координирует взаимодействие между компонентами)
+      - AppBarLayout (верхняя панель с Toolbar)
+      - NestedScrollView (прокручиваемый контейнер для контента)
+        - LinearLayout (вертикальная компоновка элементов)
+          - HorizontalScrollView (прокрутка chips по горизонтали)
+            - ChipGroup (группа фильтров по уровню)
+          - ProgressBar (индикатор загрузки)
+          - RecyclerView (список курсов)
+          - EmptyState (пустое состояние)
+      - FloatingActionButton (кнопка перехода к избранному)
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.CoursesActivity">
+
+    <!-- AppBarLayout - контейнер для верхней панели -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <!-- Toolbar - верхняя панель с заголовком и меню -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Основной контент -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--
+                HorizontalScrollView для Material Chips - Фильтры по уровням
+                
+                Параметры:
+                - scrollbars="none" - скрываем scrollbar для чистого вида
+                - padding 16dp для просторных отступов от краев
+                - clipToPadding="false" - chips могут выходить за padding при скролле
+            -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:padding="16dp"
+                android:clipToPadding="false">
+
+                <!--
+                    ChipGroup - Material Design 3 Filter Chips для уровней сложности
+                    
+                    Особенности реализации:
+                    - singleSelection="true" - только один chip может быть выбран
+                    - selectionRequired="true" - всегда должен быть выбран один chip
+                    - chipSpacing 8dp - отступы между chips
+                    
+                    Визуальные состояния Chip:
+                    - Unchecked: белый фон, серая обводка, серый текст
+                    - Checked: цветной фон контейнера, цветной текст, без обводки
+                    
+                    Цвета уровней (программно установлены в Activity):
+                    - "Все" - primary цвет (Indigo)
+                    - "Начальный" - зелёный (level_beginner)
+                    - "Средний" - оранжевый (level_intermediate)
+                    - "Продвинутый" - красный (level_advanced)
+                -->
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true"
+                    app:chipSpacing="8dp">
+
+                    <!--
+                        Chip "Все" - Показывает все курсы без фильтра
+                        
+                        Checked по умолчанию (android:checked="true")
+                        Цвет: primary (Indigo) для нейтрального варианта
+                    -->
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAll"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Все"
+                        android:checked="true" />
+
+                    <!--
+                        Chip "Начальный" - Фильтр по Beginner
+                        
+                        Цвет: Зелёный (success, безопасно начинать)
+                        Программно установлен в Activity через chipBackgroundColor
+                    -->
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipBeginner"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Начальный" />
+
+                    <!--
+                        Chip "Средний" - Фильтр по Intermediate
+                        
+                        Цвет: Оранжевый (warning, требуется внимание)
+                    -->
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipIntermediate"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Средний" />
+
+                    <!--
+                        Chip "Продвинутый" - Фильтр по Advanced
+                        
+                        Цвет: Красный (error, высокая сложность)
+                    -->
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAdvanced"
+                        style="@style/Widget.Material3.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Продвинутый" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </HorizontalScrollView>
+
+            <!--
+                ProgressBar - Индикатор загрузки (Material Design 3)
+                
+                Показывается в состоянии Resource.LOADING когда:
+                - Первая загрузка данных из Room
+                - Обновление данных с API (если включено)
+                
+                Параметры:
+                - layout_gravity="center" - по центру экрана
+                - marginTop 80dp - отступ от Chips
+                - indeterminateTint - цвет из primary темы
+            -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="80dp"
+                android:indeterminateTint="?attr/colorPrimary"
+                android:visibility="gone" />
+
+            <!--
+                RecyclerView - Список курсов
+                
+                Параметры для плавной прокрутки и производительности:
+                - clipToPadding="false" - элементы могут заходить в padding
+                - paddingTop/Bottom 8dp - отступы для первого/последнего элемента
+                - Без padding по бокам т.к. у item_course есть marginStart/End 16dp
+                
+                RecyclerView автоматически:
+                - Переиспользует View (ViewHolder pattern)
+                - Предзагружает элементы вне экрана для плавности
+                - Оптимизирует отрисовку только видимых элементов
+            -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/coursesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                tools:listitem="@layout/item_course" />
+
+            <!--
+                Empty State - Красивая заглушка для пустого списка
+                
+                Material Design 3 Empty State включает:
+                - Большую иконку (140dp) для визуального якоря
+                - Заголовок (EmptyStateTitle) для объяснения
+                - Описание (EmptyStateBody) с подсказкой что делать
+                
+                Когда показывается:
+                - Resource.SUCCESS но список пустой
+                - Поиск не дал результатов
+                - Фильтр исключил все курсы
+                
+                Параметры для центрирования:
+                - marginTop 100dp для вертикального центра
+                - gravity="center" для горизонтального центра
+                - padding 40dp для "воздуха" вокруг контента
+            -->
+            <LinearLayout
+                android:id="@+id/emptyStateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="40dp"
+                android:visibility="gone">
+
+                <!--
+                    Иконка Empty State - Большая векторная иконка
+                    
+                    Размер: 140dp для визуального impact
+                    alpha 0.3 - полупрозрачная для ненавязчивости
+                    tint - цвет из темы (onSurfaceVariant)
+                -->
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/ic_empty_state"
+                    android:contentDescription="@string/empty_state_icon"
+                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                <!--
+                    Заголовок Empty State - EmptyStateTitle
+                    
+                    Typography: 20sp, средний вес
+                    marginTop 24dp для отступа от иконки
+                -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Курсы не найдены"
+                    android:textAppearance="@style/TextAppearance.App.EmptyStateTitle" />
+
+                <!--
+                    Описание Empty State - Подсказка пользователю
+                    
+                    Typography: BodyMedium с center alignment
+                    lineSpacingExtra 4sp для читабельности
+                    marginTop 12dp для группировки с заголовком
+                -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="Попробуйте изменить фильтры\nили поисковый запрос"
+                    android:textAppearance="@style/TextAppearance.App.EmptyStateBody" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--
+        FloatingActionButton (FAB) - Быстрый доступ к избранному
+        
+        Material Design 3 FAB:
+        - Размер: standard (56dp) - оптимальный для touch target
+        - Цвет: secondary (Teal) для выделения от primary элементов
+        - Иконка: сердечко (избранное)
+        - Расположение: bottom|end (внизу справа)
+        - Margin: 24dp от краев для "воздуха"
+        
+        Elevation автоматическая (6dp покой, 12dp pressed) для depth эффекта
+    -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
+        android:contentDescription="@string/favorites"
+        app:srcCompat="@drawable/ic_favorite_border"
+        app:tint="@android:color/white"
+        app:backgroundTint="?attr/colorSecondary" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

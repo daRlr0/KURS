@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Gradient Scrim - Затемнение поверх header изображения
+    
+    Используется для обеспечения читабельности белых иконок Toolbar
+    на любом цвете фонового изображения.
+    
+    Градиент:
+    - Начало (0%): полупрозрачный черный (#80000000 = 50% opacity)
+    - Центр (50%): более прозрачный (#40000000 = 25% opacity)
+    - Конец (100%): полностью прозрачный (#00000000 = 0% opacity)
+    
+    Направление: снизу вверх (angle="90")
+    - Верх изображения (где Toolbar) темнее
+    - Середина и низ остаются яркими
+    
+    Это стандартный паттерн Material Design для Hero Images
+    (используется в Google Photos, YouTube, News и др.)
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="90"
+        android:startColor="#80000000"
+        android:centerColor="#40000000"
+        android:endColor="#00000000"
+        android:type="linear" />
+</shape>

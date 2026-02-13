@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Alpha Animation - Плавное появление (Fade In)
+    
+    Используется при переходе из состояния Loading в Success
+    для создания приятного UX без резких переключений.
+    
+    Параметры:
+    - fromAlpha 0.0 - полностью прозрачный (невидимый)
+    - toAlpha 1.0 - полностью непрозрачный (видимый)
+    - duration 300ms - продолжительность анимации
+    
+    Применение:
+    - RecyclerView появляется плавно после загрузки данных
+    - Empty State плавно показывается при пустом списке
+-->
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromAlpha="0.0"
+    android:toAlpha="1.0"
+    android:duration="300" />

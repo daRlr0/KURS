@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Material Design 3 цветовая схема "Deep Ocean"
+    
+    Палитра основана на глубоких оттенках синего и индиго,
+    создающих профессиональный и современный вид.
+    
+    Принципы Material Design 3:
+    - Primary: Основной цвет бренда (Indigo)
+    - Secondary: Акцентный цвет (Teal/бирюзовый)
+    - Tertiary: Дополнительный цвет (Purple)
+    - Surface: Цвета поверхностей
+    - On-colors: Цвета текста на соответствующих фонах
+-->
+<resources>
+    <!-- Primary Colors - Основные цвета приложения (Indigo) -->
+    <color name="md_theme_light_primary">#3F51B5</color>           <!-- Indigo 500 -->
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>         <!-- Белый текст на primary -->
+    <color name="md_theme_light_primaryContainer">#C5CAE9</color>  <!-- Indigo 100 для контейнеров -->
+    <color name="md_theme_light_onPrimaryContainer">#1A237E</color><!-- Indigo 900 -->
+
+    <!-- Secondary Colors - Вторичные цвета (Teal) -->
+    <color name="md_theme_light_secondary">#00897B</color>         <!-- Teal 600 -->
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">#B2DFDB</color><!-- Teal 100 -->
+    <color name="md_theme_light_onSecondaryContainer">#004D40</color><!-- Teal 900 -->
+
+    <!-- Tertiary Colors - Третичные цвета (Purple) -->
+    <color name="md_theme_light_tertiary">#7E57C2</color>          <!-- Deep Purple 400 -->
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_tertiaryContainer">#D1C4E9</color> <!-- Deep Purple 100 -->
+    <color name="md_theme_light_onTertiaryContainer">#4527A0</color><!-- Deep Purple 800 -->
+
+    <!-- Error Colors - Цвета ошибок -->
+    <color name="md_theme_light_error">#D32F2F</color>             <!-- Red 700 -->
+    <color name="md_theme_light_errorContainer">#FFCDD2</color>    <!-- Red 100 -->
+    <color name="md_theme_light_onError">#FFFFFF</color>
+    <color name="md_theme_light_onErrorContainer">#B71C1C</color>  <!-- Red 900 -->
+
+    <!-- Background Colors - Фоновые цвета -->
+    <color name="md_theme_light_background">#F5F7FA</color>        <!-- Светло-серый фон -->
+    <color name="md_theme_light_onBackground">#1C1B1F</color>      <!-- Почти черный текст -->
+
+    <!-- Surface Colors - Цвета поверхностей (карточки, диалоги) -->
+    <color name="md_theme_light_surface">#FFFFFF</color>           <!-- Белые карточки -->
+    <color name="md_theme_light_onSurface">#1C1B1F</color>         <!-- Темный текст на белом -->
+    <color name="md_theme_light_surfaceVariant">#E7E9F1</color>    <!-- Вариация поверхности -->
+    <color name="md_theme_light_onSurfaceVariant">#44464F</color>  <!-- Текст на вариации -->
+
+    <!-- Outline Colors - Цвета границ -->
+    <color name="md_theme_light_outline">#74777F</color>           <!-- Границы элементов -->
+    <color name="md_theme_light_outlineVariant">#C4C7CF</color>    <!-- Светлые границы -->
+
+    <!-- Level Colors - Цвета уровней сложности для Chips -->
+    <!-- Используются в ChipGroup для визуального различия уровней -->
+    <color name="level_beginner">#4CAF50</color>                   <!-- Green 500 - Начальный -->
+    <color name="level_beginner_container">#C8E6C9</color>         <!-- Green 100 -->
+    <color name="level_intermediate">#FF9800</color>               <!-- Orange 500 - Средний -->
+    <color name="level_intermediate_container">#FFE0B2</color>     <!-- Orange 100 -->
+    <color name="level_advanced">#F44336</color>                   <!-- Red 500 - Продвинутый -->
+    <color name="level_advanced_container">#FFCDD2</color>         <!-- Red 100 -->
+
+    <!-- Semantic Colors - Семантические цвета -->
+    <color name="success">#4CAF50</color>                          <!-- Green 500 -->
+    <color name="warning">#FF9800</color>                          <!-- Orange 500 -->
+    <color name="info">#2196F3</color>                            <!-- Blue 500 -->
+
+    <!-- Shadow and Elevation - Тени и возвышения -->
+    <color name="shadow">#1F000000</color>                         <!-- 12% черного -->
+    <color name="scrim">#4D000000</color>                          <!-- 30% черного для overlay -->
+
+    <!-- Transparent - Прозрачные цвета -->
+    <color name="transparent">#00000000</color>
+    
+    <!-- Legacy colors (для обратной совместимости) -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

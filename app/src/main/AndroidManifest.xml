@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Cors"
+        tools:targetApi="31">
+        
+        <!-- 
+            CoursesActivity - главный экран со списком курсов.
+            Launcher activity - запускается при старте приложения.
+        -->
+        <activity
+            android:name=".ui.CoursesActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- 
+            CourseDetailActivity - экран деталей курса.
+            Открывается при клике на курс из списка.
+        -->
+        <activity
+            android:name=".ui.CourseDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.CoursesActivity"
+            android:label="Детали курса" />
+        
+        <!-- 
+            FavoritesActivity - экран избранных курсов.
+            Открывается при клике на FAB на главном экране.
+        -->
+        <activity
+            android:name=".ui.FavoritesActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.CoursesActivity"
+            android:label="Избранное" />
+        
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+            
+    </application>
+
+</manifest>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Modern Material Design 3 Layout для элемента списка курсов
+    
+    Дизайн следует принципам Material Design 3:
+    - MaterialCardView с мягким скруглением (16dp) для современного вида
+    - cardElevation 2dp - легкая тень для depth без перегруженности
+    - Горизонтальная компоновка: изображение слева, контент справа
+    - Просторные отступы (16dp) для "воздуха" и читабельности
+    - Typography: TitleMedium для названия, BodySmall для метаданных
+    
+    Структура компонентов:
+    - MaterialCardView (контейнер с тенью и скруглениями)
+      - ConstraintLayout (гибкая компоновка элементов)
+        - ImageView 100x100dp (превью обложки курса с clip)
+        - Вертикальная группа TextViews (название, провайдер, метаданные)
+        - ImageButton (toggle избранного в правом верхнем углу)
+    
+    Особенности реализации:
+    - ImageView использует scaleType="centerCrop" для заполнения без искажений
+    - ConstraintLayout обеспечивает адаптивность под разные размеры экранов
+    - Drawables с иконками (duration, level) для визуальной идентификации метаданных
+-->
+<com.google.android.material.card.MaterialCardView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!--
+            Изображение курса (обложка) - Image Clip Preview
+            
+            Размер: 100x100dp - достаточно большое для preview, но не доминирующее
+            scaleType="centerCrop" - изображение заполняет весь ImageView без искажений,
+                                      обрезая излишки по краям (важно для разных пропорций)
+            background - небольшое скругление углов через drawable для эстетики
+            
+            Glide будет загружать сюда реальные фото из Unsplash с кешированием,
+            placeholder покажется во время загрузки, error - при ошибке загрузки.
+        -->
+        <ImageView
+            android:id="@+id/courseImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/course_image"
+            android:background="@drawable/image_rounded_corners"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_course_placeholder" />
+
+        <!--
+            Название курса - Заголовок карточки
+            
+            Typography: TitleMedium (16sp, medium weight) из Material Design 3
+            maxLines="2" - ограничиваем 2 строками для компактности списка
+            ellipsize="end" - если не влезает, обрезаем с многоточием в конце
+            
+            Отступы:
+            - marginStart="16dp" - отступ от изображения для "воздуха"
+            - marginEnd="48dp" - место для кнопки избранного справа
+            
+            Цвет: colorOnSurface - высококонтрастный текст на белом фоне карточки
+        -->
+        <TextView
+            android:id="@+id/courseTitleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="48dp"
+            android:textAppearance="@style/TextAppearance.App.TitleMedium"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintStart_toEndOf="@id/courseImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/courseImageView"
+            tools:text="Android Development для начинающих" />
+
+        <!--
+            Провайдер курса - Вторичная информация
+            
+            Typography: Caption style (12sp, серый цвет) для вторичной информации
+            Визуально отличается от заголовка размером и цветом
+            
+            Отступ: marginTop="4dp" - небольшой отступ от заголовка для разделения
+            maxLines="1" - всегда одна строка для компактности
+        -->
+        <TextView
+            android:id="@+id/providerTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/TextAppearance.App.Caption"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintStart_toStartOf="@id/courseTitleTextView"
+            app:layout_constraintEnd_toEndOf="@id/courseTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/courseTitleTextView"
+            tools:text="Udemy" />
+
+        <!--
+            Длительность курса - Метаданные с иконкой
+            
+            Typography: Metadata style (13sp) для читабельности метаинформации
+            drawableStartCompat - иконка часов слева от текста
+            drawablePadding="6dp" - отступ между иконкой и текстом
+            
+            Иконка помогает быстро идентифицировать тип информации
+            без необходимости читать подпись "Длительность:"
+        -->
+        <TextView
+            android:id="@+id/durationTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.App.Metadata"
+            android:drawablePadding="6dp"
+            app:drawableStartCompat="@drawable/ic_duration"
+            app:drawableTint="@color/md_theme_light_onSurfaceVariant"
+            app:layout_constraintStart_toStartOf="@id/courseTitleTextView"
+            app:layout_constraintTop_toBottomOf="@id/providerTextView"
+            tools:text="40 часов" />
+
+        <!--
+            Уровень сложности - Метаданные с иконкой и цветом
+            
+            Цвет уровня будет установлен программно в адаптере:
+            - Beginner (Начальный) = зелёный
+            - Intermediate (Средний) = оранжевый
+            - Advanced (Продвинутый) = красный
+            
+            Это помогает пользователю быстро оценить сложность курса
+        -->
+        <TextView
+            android:id="@+id/levelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textAppearance="@style/TextAppearance.App.Metadata"
+            android:drawablePadding="6dp"
+            app:drawableStartCompat="@drawable/ic_level"
+            app:drawableTint="@color/md_theme_light_onSurfaceVariant"
+            app:layout_constraintStart_toEndOf="@id/durationTextView"
+            app:layout_constraintTop_toTopOf="@id/durationTextView"
+            app:layout_constraintBottom_toBottomOf="@id/durationTextView"
+            tools:text="Начальный" />
+
+        <!--
+            Кнопка избранного (иконка сердечка) - Toggle Action
+            
+            Размер: 48x48dp - минимальный размер для touch target (Material Design)
+            background - ripple эффект при нажатии (selectableItemBackgroundBorderless)
+            
+            Состояния иконки (устанавливается в адаптере):
+            - ic_favorite_border (пустое сердце) = не в избранном
+            - ic_favorite_filled (красное сердце) = в избранном
+            
+            Расположение: правый верхний угол карточки для быстрого доступа
+        -->
+        <ImageButton
+            android:id="@+id/favoriteButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/add_to_favorites"
+            android:src="@drawable/ic_favorite_border"
+            android:padding="12dp"
+            app:tint="@color/md_theme_light_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

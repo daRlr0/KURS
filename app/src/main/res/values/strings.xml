@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Каталог курсов</string>
+    
+    <!-- Content Descriptions -->
+    <string name="course_image">Изображение курса</string>
+    <string name="add_to_favorites">Добавить в избранное</string>
+    <string name="favorites">Избранное</string>
+    <string name="empty_state_icon">Пусто</string>
+    <string name="empty_favorites_icon">Нет избранных</string>
+    
+    <!-- UI Text -->
+    <string name="all_levels">Все</string>
+    <string name="beginner_level">Начальный</string>
+    <string name="intermediate_level">Средний</string>
+    <string name="advanced_level">Продвинутый</string>
+    
+    <!-- Messages -->
+    <string name="no_courses_found">Курсы не найдены</string>
+    <string name="loading">Загрузка…</string>
+    <string name="error_loading">Ошибка загрузки</string>
+</resources>

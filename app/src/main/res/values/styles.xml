@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Material Design 3 Typography Styles
+    
+    Типографика следует системе Material Design 3:
+    - Display: Самые крупные заголовки
+    - Headline: Крупные заголовки экранов
+    - Title: Заголовки разделов
+    - Body: Основной текст
+    - Label: Кнопки и метки
+    
+    Принципы читабельности:
+    - lineSpacingExtra 4sp - увеличенный межстрочный интервал
+    - Контрастные размеры для иерархии
+    - Четкие веса шрифтов (normal, medium, bold)
+-->
+<resources>
+    <!-- Display Styles - Самые крупные заголовки (редко используются) -->
+    <style name="TextAppearance.App.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">57sp</item>
+        <item name="android:lineHeight">64sp</item>
+        <item name="android:letterSpacing">-0.0156</item>
+    </style>
+
+    <!-- Headline Styles - Заголовки экранов -->
+    <!-- HeadlineLarge - Главные заголовки -->
+    <style name="TextAppearance.App.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:lineHeight">40sp</item>
+        <item name="android:textColor">@color/md_theme_light_onBackground</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- HeadlineMedium - Средние заголовки -->
+    <style name="TextAppearance.App.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:lineHeight">36sp</item>
+        <item name="android:textColor">@color/md_theme_light_onBackground</item>
+    </style>
+
+    <!-- HeadlineSmall - Малые заголовки (для заголовков карточек) -->
+    <style name="TextAppearance.App.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:lineHeight">32sp</item>
+        <item name="android:textColor">@color/md_theme_light_onSurface</item>
+    </style>
+
+    <!-- Title Styles - Заголовки разделов -->
+    <!-- TitleLarge - Крупные заголовки разделов -->
+    <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">28sp</item>
+        <item name="android:textColor">@color/md_theme_light_onSurface</item>
+    </style>
+
+    <!-- TitleMedium - Средние заголовки (название курса в списке) -->
+    <style name="TextAppearance.App.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:textColor">@color/md_theme_light_onSurface</item>
+    </style>
+
+    <!-- TitleSmall - Малые заголовки -->
+    <style name="TextAppearance.App.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:textColor">@color/md_theme_light_onSurfaceVariant</item>
+    </style>
+
+    <!-- Body Styles - Основной текст -->
+    <!-- BodyLarge - Крупный основной текст (описания) -->
+    <!-- lineHeight 24sp обеспечивает читабельность (1.5x от 16sp) -->
+    <style name="TextAppearance.App.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:textColor">@color/md_theme_light_onSurface</item>
+    </style>
+
+    <!-- BodyMedium - Средний основной текст (основной текст приложения) -->
+    <!-- lineHeight 20sp = 1.43x от 14sp для читабельности -->
+    <style name="TextAppearance.App.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:textColor">@color/md_theme_light_onSurface</item>
+    </style>
+
+    <!-- BodySmall - Малый основной текст (вторичная информация) -->
+    <style name="TextAppearance.App.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:textColor">@color/md_theme_light_onSurfaceVariant</item>
+    </style>
+
+    <!-- Label Styles - Метки (кнопки, чипы) -->
+    <!-- LabelLarge - Крупные метки (текст на кнопках) -->
+    <style name="TextAppearance.App.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineHeight">20sp</item>
+        <item name="android:letterSpacing">0.0071</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- LabelMedium - Средние метки (чипы) -->
+    <style name="TextAppearance.App.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:letterSpacing">0.0417</item>
+    </style>
+
+    <!-- LabelSmall - Малые метки (подписи) -->
+    <style name="TextAppearance.App.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:letterSpacing">0.0455</item>
+    </style>
+
+    <!-- Custom Styles - Кастомные стили для специфичных случаев -->
+    
+    <!-- Стиль для провайдера курса (серый, меньший размер) -->
+    <style name="TextAppearance.App.Caption" parent="TextAppearance.App.BodySmall">
+        <item name="android:textColor">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Стиль для метаинформации (длительность, уровень) -->
+    <style name="TextAppearance.App.Metadata" parent="TextAppearance.App.LabelMedium">
+        <item name="android:textColor">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- Стиль для заголовка Empty State -->
+    <style name="TextAppearance.App.EmptyStateTitle" parent="TextAppearance.App.HeadlineSmall">
+        <item name="android:textColor">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- Стиль для текста Empty State -->
+    <style name="TextAppearance.App.EmptyStateBody" parent="TextAppearance.App.BodyMedium">
+        <item name="android:textColor">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+</resources>

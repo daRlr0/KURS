@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Drawable для скругленных углов изображений
+    
+    Используется как background для ImageView чтобы создать
+    скругленные углы (12dp) в стиле Material Design 3.
+    
+    Цвет: surfaceVariant - светло-серый фон который видно
+    пока изображение загружается или если оно прозрачное.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="12dp" />
+    <solid android:color="@color/md_theme_light_surfaceVariant" />
+</shape>
